@@ -369,11 +369,11 @@ html,body{width:100%;height:100%;background:var(--bg);overflow:hidden;font-famil
 
 <script>
 // ════════════════════════════════════════
-// CONFIG
-// Change API to your Render URL after deploying:
-// const API = 'https://saferoute-backend.onrender.com';
+// CONFIG — automatically uses Render in production, localhost in development
 // ════════════════════════════════════════
-const API  = 'http://localhost:5000';
+const API  = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
+             ? 'http://localhost:5000'
+             : 'https://saferoute-backend.onrender.com'; // ← your Render URL
 const OWM  = '';   // paste OpenWeatherMap key here for real weather
 const TICK = 5000; // ms between predictions
 
