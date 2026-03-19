@@ -189,3 +189,4 @@ def health():
 if __name__=='__main__':
     print("\n🚗 SafeRoute AI Backend v3 — http://localhost:5000")
     app.run(port=5000,debug=True)
+    
