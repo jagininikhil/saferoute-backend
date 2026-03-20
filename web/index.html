@@ -284,11 +284,9 @@ html,body{width:100%;height:100%;background:var(--bg);overflow:hidden;font-famil
 
 <!-- FABs -->
 <div id="fabs">
-  <!-- Feature 2: Voice on/off -->
   <div class="fab on" id="fab-voice" onclick="toggleVoice()" title="Voice alerts on/off">
     <svg viewBox="0 0 24 24" fill="white" width="20" height="20"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3A4.5 4.5 0 0013 7.97v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
   </div>
-  <!-- Feature 5: Traffic layer -->
   <div class="fab" id="fab-traffic" onclick="toggleTraffic()" title="Traffic layer">
     <svg viewBox="0 0 24 24" width="20" height="20" fill="none">
       <rect x="9" y="2" width="6" height="20" rx="3" fill="var(--muted)" opacity=".3"/>
@@ -297,9 +295,26 @@ html,body{width:100%;height:100%;background:var(--bg);overflow:hidden;font-famil
       <circle cx="12" cy="18" r="2.2" fill="#34A853"/>
     </svg>
   </div>
-  <!-- Heatmap -->
   <div class="fab" id="fab-hm" onclick="toggleHeatmap()" title="Accident heatmap">
     <svg viewBox="0 0 24 24" fill="var(--muted)" width="20" height="20"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15v-4H7l5-8v4h4l-5 8z"/></svg>
+  </div>
+  <!-- Report accident button -->
+  <div class="fab" id="fab-report" onclick="showReportModal()" title="Report accident" style="background:#EA4335;border-color:#EA4335">
+    <svg viewBox="0 0 24 24" fill="white" width="20" height="20"><path d="M1 21L12 2l11 19H1zm11-3v-2h-2v2h2zm0-4V10h-2v4h2z"/></svg>
+  </div>
+</div>
+
+<!-- REPORT ACCIDENT MODAL -->
+<div id="report-modal" style="display:none;position:fixed;inset:0;z-index:800;background:rgba(0,0,0,.7);align-items:flex-end;justify-content:center">
+  <div style="background:var(--surf);border-radius:20px 20px 0 0;width:100%;padding:20px 18px 32px;box-shadow:0 -4px 32px rgba(0,0,0,.6)">
+    <div style="width:36px;height:4px;background:rgba(255,255,255,.12);border-radius:2px;margin:0 auto 16px"></div>
+    <div style="font-family:var(--font);font-size:16px;font-weight:500;margin-bottom:4px">Report Accident</div>
+    <div style="font-size:12px;color:var(--muted);margin-bottom:16px">Tap to report at your current location</div>
+    <div id="report-types" style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px"></div>
+    <div style="display:flex;gap:10px">
+      <button onclick="closeReportModal()" style="flex:1;padding:13px;border:1px solid var(--border);border-radius:10px;background:transparent;color:var(--muted);font-family:var(--font);font-size:14px;cursor:pointer">Cancel</button>
+      <button onclick="submitReport()" id="report-submit" style="flex:2;padding:13px;border:none;border-radius:10px;background:#EA4335;color:#fff;font-family:var(--font);font-size:14px;font-weight:500;cursor:pointer">Report Now</button>
+    </div>
   </div>
 </div>
 
@@ -1149,6 +1164,113 @@ async function boot(){
   document.getElementById('splash').classList.add('out');
   setTimeout(()=>document.getElementById('splash').remove(),500);
 }
+// ════════════════════════════════════════
+// ACCIDENT REPORTING (crowdsourced)
+// ════════════════════════════════════════
+let reportMarkers = [];
+let selectedReportType = null;
+
+const REPORT_TYPES = [
+  { id:'accident',   label:'Accident',    emoji:'💥', color:'#EA4335' },
+  { id:'hazard',     label:'Hazard',      emoji:'⚠️', color:'#FBBC04' },
+  { id:'roadblock',  label:'Road Block',  emoji:'🚧', color:'#FF7043' },
+  { id:'flood',      label:'Flooding',    emoji:'🌊', color:'#29B6F6' },
+  { id:'animal',     label:'Animal',      emoji:'🐄', color:'#66BB6A' },
+  { id:'pothole',    label:'Pothole',     emoji:'🕳️', color:'#8D6E63' },
+];
+
+function showReportModal(){
+  selectedReportType = null;
+  const container = document.getElementById('report-types');
+  container.innerHTML = '';
+  REPORT_TYPES.forEach(t => {
+    const btn = document.createElement('div');
+    btn.id = 'rt-'+t.id;
+    btn.style.cssText = `padding:10px 6px;background:var(--surf2);border:2px solid var(--border);
+      border-radius:10px;text-align:center;cursor:pointer;transition:all .15s`;
+    btn.innerHTML = `<div style="font-size:22px;margin-bottom:4px">${t.emoji}</div>
+      <div style="font-size:11px;font-family:var(--font);color:var(--text);font-weight:500">${t.label}</div>`;
+    btn.onclick = () => {
+      document.querySelectorAll('[id^="rt-"]').forEach(b =>
+        b.style.borderColor = 'var(--border)');
+      btn.style.borderColor = t.color;
+      selectedReportType = t;
+    };
+    container.appendChild(btn);
+  });
+  document.getElementById('report-modal').style.display = 'flex';
+}
+
+function closeReportModal(){
+  document.getElementById('report-modal').style.display = 'none';
+  selectedReportType = null;
+}
+
+function submitReport(){
+  if(!selectedReportType){
+    document.getElementById('report-submit').textContent = 'Select a type first!';
+    setTimeout(()=> document.getElementById('report-submit').textContent = 'Report Now', 2000);
+    return;
+  }
+  // Place marker on map at current GPS position
+  const t = selectedReportType;
+  const marker = L.marker([S.lat, S.lng], {
+    icon: L.divIcon({
+      html: `<div style="background:${t.color};width:36px;height:36px;border-radius:50%;
+        display:flex;align-items:center;justify-content:center;font-size:18px;
+        border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.45)">${t.emoji}</div>`,
+      className:'', iconSize:[36,36], iconAnchor:[18,18]
+    })
+  }).addTo(map);
+
+  // Popup with details
+  marker.bindPopup(`<div style="font-family:sans-serif;min-width:140px">
+    <div style="font-weight:700;font-size:14px;margin-bottom:4px">${t.emoji} ${t.label} Reported</div>
+    <div style="font-size:11px;color:#666">${new Date().toLocaleTimeString()}</div>
+    <div style="font-size:11px;color:#666;margin-top:4px">${S.lat.toFixed(5)}, ${S.lng.toFixed(5)}</div>
+    <button onclick="this.closest('.leaflet-popup').querySelector('button').disabled=true"
+      style="margin-top:8px;padding:4px 10px;background:#EA4335;color:#fff;border:none;
+      border-radius:6px;cursor:pointer;font-size:11px" 
+      onclick="removeReport(${reportMarkers.length})">Remove</button>
+  </div>`).openPopup();
+
+  reportMarkers.push(marker);
+
+  // Voice confirmation
+  if(S.voiceOn){
+    const u = new SpeechSynthesisUtterance(`${t.label} reported at your location.`);
+    u.rate=.9; speechSynthesis.speak(u);
+  }
+
+  closeReportModal();
+
+  // Show toast
+  showToast(`${t.emoji} ${t.label} reported — visible to all users`);
+
+  // Auto-remove after 30 minutes
+  setTimeout(()=>{
+    map.removeLayer(marker);
+    reportMarkers = reportMarkers.filter(m => m !== marker);
+  }, 30*60*1000);
+}
+
+function showToast(msg){
+  let toast = document.getElementById('toast');
+  if(!toast){
+    toast = document.createElement('div');
+    toast.id = 'toast';
+    toast.style.cssText = `position:fixed;bottom:240px;left:50%;transform:translateX(-50%);
+      z-index:700;background:rgba(30,30,40,.95);color:#fff;padding:10px 20px;
+      border-radius:20px;font-size:13px;font-family:var(--font);
+      box-shadow:0 4px 16px rgba(0,0,0,.4);white-space:nowrap;
+      transition:opacity .3s;pointer-events:none`;
+    document.body.appendChild(toast);
+  }
+  toast.textContent = msg;
+  toast.style.opacity = '1';
+  setTimeout(()=> toast.style.opacity='0', 3000);
+}
+
 boot();
 
 // ── PWA SERVICE WORKER REGISTRATION ──────────────────────────────
