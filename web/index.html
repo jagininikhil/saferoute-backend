@@ -582,21 +582,7 @@ function voiceAlert(sv){
   speechSynthesis.cancel();
   speechSynthesis.speak(u);
 }
-function showAhead(sv, w){
-  const el = document.getElementById('ahead-alert');
-  if(!el) return;
-  document.getElementById('ahead-title').textContent = sv>=4 ? 'Severe risk zone 500m ahead' : 'Accident-prone zone 500m ahead';
-  document.getElementById('ahead-sub').textContent = 'Reduce speed · Vis '+(w.visibility||6)+' km · Wind '+(w.wind_speed||10)+' km/h';
-  el.style.transform='translateY(0)'; el.style.opacity='1'; el.style.pointerEvents='all';
-  clearTimeout(S.aheadTO);
-  S.aheadTO = setTimeout(closeAhead, 10000);
-  if(S.voiceOn && S.severity !== S._lastAheadSev){
-    S._lastAheadSev = S.severity;
-    const msg = sv>=4 ? 'Danger. Severe accident zone 500 metres ahead.' : 'Warning. Accident prone zone 500 metres ahead. Please slow down.';
-    const u = new SpeechSynthesisUtterance(msg);
-    u.rate=.9; speechSynthesis.cancel(); speechSynthesis.speak(u);
-  }
-}
+
 function closeAhead(){
   const el = document.getElementById('ahead-alert');
   if(el){ el.style.transform='translateY(-20px)'; el.style.opacity='0'; el.style.pointerEvents='none'; }
