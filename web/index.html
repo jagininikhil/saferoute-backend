@@ -354,7 +354,7 @@ html,body{width:100%;height:100%;background:#0d0e13;overflow:hidden;font-family:
 // ═══════════════════════════════════════════════════════
 // CONFIG — edit these
 // ═══════════════════════════════════════════════════════
-const API   = 'http://localhost:5000/predict';  // your Flask backend
+const API   = 'https://saferoute-backend-s5cm.onrender.com';  // your Flask backend
 const OWM = '15f91917e6fac8819f5acbd5a2100cb3';                               // OpenWeatherMap key (leave blank = mock weather)
 const TICK  = 5000;                             // prediction interval ms
 
@@ -435,7 +435,7 @@ async function getWeather(lat,lng){
       return{
         temperature:Math.round(d.main.temp),
         humidity:d.main.humidity,
-        visibility:parseFloat((d.visibility/1609.34).toFixed(1)),
+        visibility:parseFloat((d.visibility/1000).toFixed(1)),
         wind_speed:Math.round(d.wind.speed),
         weather:d.weather[0].id<800?1:0,
         junction:0,traffic_signal:0
