@@ -514,8 +514,8 @@ function updateUI(result,w){
   document.getElementById('rb-level').style.color=barColor;
   document.getElementById('rb-msg').textContent=
     severity===1?'Road conditions normal. Drive safely.':
-    severity===2?`Moderate conditions. Visibility ${w.visibility}mi, wind ${w.wind_speed}mph.`:
-    severity===3?`High accident risk! Visibility ${w.visibility}mi, wind ${w.wind_speed}mph.`:
+    severity===2?`Moderate conditions. Visibility ${w.visibility} km, wind ${w.wind_speed} km/h.`:
+    severity===3?`High accident risk! Visibility ${w.visibility} km, wind ${w.wind_speed} km/h.`:
     `Extreme danger! Consider stopping if safe.`;
 
   // Danger zone circle on map
@@ -550,7 +550,7 @@ function showAlert(sv,w){
     sv>=4?'Severe Risk — Extreme Caution':'High Accident Risk Ahead';
   document.getElementById('alert-sub').textContent=
     sv>=4?'Consider alternate route · Dangerous conditions':
-    `Reduce speed · Visibility ${w.visibility}mi · Wind ${w.wind_speed}mph`;
+    `Reduce speed · Visibility ${w.visibility} km · Wind ${w.wind_speed} km/h`;
   document.getElementById('alert-bar').classList.add('show');
   clearTimeout(S.alertTO);
   S.alertTO=setTimeout(dismissAlert,10000);
@@ -863,7 +863,7 @@ async function tick(){
   updateUI(r, w);
 
   // Update traffic metric tile
-  document.getElementById('m-wind').textContent = w.wind_speed;
+  const mwind2=document.getElementById('m-wind'); if(mwind2) mwind2.textContent=w.wind_speed;
   // Update traffic tile — swap wind for traffic when traffic is on
   const trafficTile = document.getElementById('m-traffic-val');
   if(trafficTile) trafficTile.textContent = traffic.level;
