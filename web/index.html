@@ -492,8 +492,8 @@ function updateUI(result,w){
   // Metrics
   document.getElementById('m-temp').textContent  = w.temperature+'°';
   document.getElementById('m-hum').textContent   = w.humidity+'%';
-  document.getElementById('m-vis').textContent   = w.visibility+'mi';
-  document.getElementById('m-wind').textContent  = w.wind_speed;
+  document.getElementById('m-vis').textContent   = w.visibility+' km';
+  const mwind=document.getElementById('m-wind'); if(mwind) mwind.textContent=w.wind_speed;
 
   // Risk pill
   const cls=severity<=1?'safe':severity===2?'warn':severity===3?'danger':'severe';
