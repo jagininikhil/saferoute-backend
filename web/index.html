@@ -325,7 +325,7 @@ html,body{width:100%;height:100%;background:#0d0e13;overflow:hidden;font-family:
 
     <!-- 4 metric tiles -->
     <div class="metrics">
-      <div class="mc"><div class="mi">🌡️</div><div class="mv" id="m-temp">--</div><div class="ml">Temp °F</div></div>
+      <div class="mc"><div class="mi">🌡️</div><div class="mv" id="m-temp">--</div><div class="ml">Temp °C</div></div>
       <div class="mc"><div class="mi">💧</div><div class="mv" id="m-hum">--</div><div class="ml">Humidity</div></div>
       <div class="mc"><div class="mi">👁️</div><div class="mv" id="m-vis">--</div><div class="ml">Visibility</div></div>
       <div class="mc"><div class="mi">🚦</div><div class="mv" id="m-traffic-val">--</div><div class="ml">Traffic</div></div>
@@ -436,7 +436,7 @@ async function getWeather(lat,lng){
         temperature:Math.round(d.main.temp),
         humidity:d.main.humidity,
         visibility:parseFloat((d.visibility/1000).toFixed(1)),
-        wind_speed:Math.round(d.wind.speed),
+        wind_speed:Math.round(d.wind.speed*3.6),
         weather:d.weather[0].id<800?1:0,
         junction:0,traffic_signal:0
       };
