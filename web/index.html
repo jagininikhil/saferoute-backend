@@ -892,8 +892,8 @@ async function boot(){
   map.setView([S.lat,S.lng],15);
   await sleep(200);
 
-  msg.textContent='Running first prediction...';
-  await tick();
+  msg.textContent='Fetching weather...';
+  await Promise.race([tick(), new Promise(r=>setTimeout(r,3000))]);
   await sleep(200);
 
   msg.textContent='Starting live monitor...';
