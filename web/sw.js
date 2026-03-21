@@ -1,5 +1,5 @@
 // SafeRoute AI — Service Worker v2
-const CACHE = 'saferoute-v4';
+const CACHE = 'saferoute-v5';
 const STATIC = [
   '/',
   '/index.html',
