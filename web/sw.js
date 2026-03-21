@@ -1,9 +1,16 @@
-// SafeRoute AI — Service Worker v1
-const CACHE = 'saferoute-v1';
-const SHELL = ['/', '/index.html', '/manifest.json'];
+// SafeRoute AI — Service Worker v2
+const CACHE = 'saferoute-v2';
+const STATIC = [
+  '/',
+  '/index.html',
+  'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css',
+  'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js'
+];
 
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(SHELL)));
+  e.waitUntil(
+    caches.open(CACHE).then(c => c.addAll(STATIC)).catch(() => {})
+  );
   self.skipWaiting();
 });
 
@@ -17,27 +24,16 @@ self.addEventListener('activate', e => {
 });
 
 self.addEventListener('fetch', e => {
-  const url = new URL(e.request.url);
-  // Always use network for API calls — predictions must be live
-  if (url.pathname.startsWith('/predict') ||
-      url.pathname.startsWith('/traffic') ||
-      url.hostname.includes('onrender.com') ||
-      url.hostname.includes('openstreetmap.org') ||
-      url.hostname.includes('openweathermap.org') ||
-      url.hostname.includes('project-osrm.org') ||
-      url.hostname.includes('overpass-api.de')) {
+  // Always go network-first for API calls and weather
+  const url = e.request.url;
+  if (url.includes('openweathermap') || url.includes('onrender.com') ||
+      url.includes('overpass-api') || url.includes('nominatim') ||
+      url.includes('osrm')) {
+    e.respondWith(fetch(e.request).catch(() => caches.match(e.request)));
     return;
   }
-  // Cache-first for app shell
+  // Cache-first for static assets
   e.respondWith(
-    caches.match(e.request).then(cached => {
-      if (cached) return cached;
-      return fetch(e.request).then(response => {
-        if (!response || response.status !== 200) return response;
-        const clone = response.clone();
-        caches.open(CACHE).then(c => c.put(e.request, clone));
-        return response;
-      }).catch(() => caches.match('/index.html'));
-    })
+    caches.match(e.request).then(cached => cached || fetch(e.request))
   );
 });
