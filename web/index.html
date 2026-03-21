@@ -864,13 +864,13 @@ async function tick(){ try {
 
   // Update traffic metric tile
   const mwind2=document.getElementById('m-wind'); if(mwind2) mwind2.textContent=w.wind_speed;
-  } catch(e){ console.warn('tick error:',e); }
   // Update traffic tile — swap wind for traffic when traffic is on
   const trafficTile = document.getElementById('m-traffic-val');
   if(trafficTile) trafficTile.textContent = traffic.level;
 
   // Redraw traffic overlay if active
   if(trafficOn && S.routes.length>0) drawTrafficOnRoute();
+  } catch(e){ console.warn('tick error:',e); }
 
   // Move GPS marker
   gpsMark.setLatLng([S.lat,S.lng]);
