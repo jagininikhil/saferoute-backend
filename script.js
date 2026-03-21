@@ -1,65 +1,56 @@
-const API = "https://saferoute-backend-s5cm.onrender.com";
+const CACHE_NAME = "saferoute-v2";
 
-var map = L.map('map').setView([13.0827, 80.2707], 13);
+const urlsToCache = [
+  "/",
+  "/index.html",
+  "/manifest.json",
+  "/script.js",
+  "/icons/icon-192.png",
+  "/icons/icon-512.png"
+];
 
-L.tileLayer(
-'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-{
-maxZoom: 19
-}).addTo(map);
-
-var marker = null;
-var clickedLat = null;
-var clickedLng = null;
-
-map.on('click', function(e){
-
-clickedLat = e.latlng.lat;
-clickedLng = e.latlng.lng;
-
-if(marker){
-map.removeLayer(marker);
-}
-
-marker = L.marker([clickedLat, clickedLng]).addTo(map);
-
+// Install Service Worker
+self.addEventListener("install", (event) => {
+  console.log("Service Worker installing...");
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => {
+      return cache.addAll(urlsToCache);
+    })
+  );
+  self.skipWaiting();
 });
 
-async function checkRisk(){
+// Activate Service Worker
+self.addEventListener("activate", (event) => {
+  console.log("Service Worker activating...");
+  event.waitUntil(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames.map((cache) => {
+          if (cache !== CACHE_NAME) {
+            console.log("Deleting old cache:", cache);
+            return caches.delete(cache);
+          }
+        })
+      );
+    })
+  );
+  self.clients.claim();
+});
 
-if(clickedLat == null){
-alert("Click on map first");
-return;
-}
-
-const data = {
-temperature:30,
-humidity:70,
-visibility:2,
-wind_speed:10,
-weather:3,
-Junction:1,
-traffic_signal:0
-}
-
-const response = await fetch(
-API + "/predict",
-{
-method:"POST",
-headers:{
-"Content-Type":"application/json"
-},
-body:JSON.stringify(data)
-}
-)
-
-const result = await response.json()
-
-document.getElementById("result").innerText =
-"Predicted Accident Severity: " + result.severity
-
-if(result.severity >=3){
-alert("⚠ High accident risk detected in this area");
-}
-
-}
+// Fetch from cache first, then network
+self.addEventListener("fetch", (event) => {
+  event.respondWith(
+    caches.match(event.request).then((response) => {
+      return (
+        response ||
+        fetch(event.request).then((networkResponse) => {
+          return caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, networkResponse.clone());
+            return networkResponse;
+          });
+        })
+      );
+    })
+  );
+});
