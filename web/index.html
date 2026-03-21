@@ -344,7 +344,7 @@ html,body{width:100%;height:100%;background:var(--bg);overflow:hidden;font-famil
     </div>
 
     <div class="metrics">
-      <div class="mc"><div class="mi">🌡️</div><div class="mv" id="m-temp">--</div><div class="ml">Temp °F</div></div>
+      <div class="mc"><div class="mi">🌡️</div><div class="mv" id="m-temp">--</div><div class="ml">Temp °C</div></div>
       <div class="mc"><div class="mi">💧</div><div class="mv" id="m-hum">--</div><div class="ml">Humidity</div></div>
       <div class="mc"><div class="mi">👁️</div><div class="mv" id="m-vis">--</div><div class="ml">Visibility</div></div>
       <div class="mc"><div class="mi">🚦</div><div class="mv" id="m-traf">--</div><div class="ml">Traffic</div></div>
@@ -474,7 +474,7 @@ async function fetchSpeedLimitOSM(lat,lng){
       {method:'POST',body:`data=${encodeURIComponent(q)}`,signal:AbortSignal.timeout(4000)});
     const d=await r.json();
     const raw=d?.elements?.[0]?.tags?.maxspeed||'';
-    if(raw.toLowerCase().includes('mph'))     _speedLimitCache=Math.round(parseFloat(raw)*1.60934);
+    if(raw.toLowerCase().includes('km/h'))     _speedLimitCache=Math.round(parseFloat(raw)*1.60934);
     else if(/^\d+/.test(raw))                 _speedLimitCache=parseInt(raw);
     else if(raw==='IN:urban')                 _speedLimitCache=50;
     else if(raw==='IN:rural')                 _speedLimitCache=100;
@@ -582,15 +582,15 @@ async function getWeather(lat,lng){
   if(OWM){
     try{
       const r=await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${OWM}&units=imperial`,
+        `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${OWM}&units=metric`,
         {signal:AbortSignal.timeout(4000)}
       );
       const d=await r.json();
       return{
         temperature:   Math.round(d.main.temp),
         humidity:      d.main.humidity,
-        visibility:    parseFloat((d.visibility/1609.34).toFixed(1)),
-        wind_speed:    Math.round(d.wind.speed),
+        visibility:    parseFloat((d.visibility/1000).toFixed(1)),
+        wind_speed:    Math.round(d.wind.speed*3.6),
         weather:       d.weather[0].id<800?1:0,
         junction:      0,
         traffic_signal:0,
@@ -669,7 +669,7 @@ function updateUI(result,w,traffic){
 
   document.getElementById('m-temp').textContent=w.temperature+'°';
   document.getElementById('m-hum').textContent=w.humidity+'%';
-  document.getElementById('m-vis').textContent=w.visibility+'mi';
+  document.getElementById('m-vis').textContent=w.visibility + ' km';
   document.getElementById('m-traf').textContent=traffic.level;
 
   const cls=severity<=1?'safe':severity===2?'warn':severity===3?'danger':'severe';
@@ -689,8 +689,8 @@ function updateUI(result,w,traffic){
   const reasons = result.reasons && result.reasons.length
     ? `Risk factors: ${result.reasons.join(' · ')}`
     : (severity===1?'Road conditions normal. Drive safely.':
-       severity===2?`Moderate risk. Vis ${w.visibility}mi, wind ${w.wind_speed}mph.`:
-       severity===3?`High accident risk! Vis ${w.visibility}mi, wind ${w.wind_speed}mph.`:
+       severity===2?`Moderate risk. Vis ${w.visibility} km, wind ${w.wind_speed}km/h.`:
+       severity===3?`High accident risk! Vis ${w.visibility} km, wind ${w.wind_speed}km/h.`:
        'Extreme danger! Consider stopping if safe.');
   document.getElementById('rb-msg').textContent=reasons;
 
@@ -757,7 +757,7 @@ function haversine(la1,ln1,la2,ln2){
 
 function showAhead(sv,w){
   document.getElementById('ahead-title').textContent=sv>=4?'Severe risk zone 500m ahead':'Accident-prone zone 500m ahead';
-  document.getElementById('ahead-sub').textContent=`Reduce speed · Vis ${w.visibility||8}mi · Wind ${w.wind_speed||5}mph`;
+  document.getElementById('ahead-sub').textContent=`Reduce speed · Vis ${w.visibility||8}mi · Wind ${w.wind_speed||5}km/h`;
   document.getElementById('ahead-alert').classList.add('show');
   clearTimeout(S.aheadTO);
   S.aheadTO=setTimeout(closeAhead,10000);
