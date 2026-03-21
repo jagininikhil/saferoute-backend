@@ -538,7 +538,7 @@ function updateUI(result,w){
       fillColor:severity>=4?'#9C27B0':'#EA4335'
     });
     showAhead(severity,w);
-    if(S.voiceOn && severityChanged) voiceAlert(severity);
+    if(S.voiceOn && severityChanged && severity>=2) voiceAlert(severity);
   } else {
     dangerCircle.setStyle({opacity:0,fillOpacity:0});
     if(S.alertTO) clearTimeout(S.alertTO);
@@ -821,6 +821,51 @@ function endNav(){
 }
 
 // Enter key triggers search
+// Autocomplete
+let acTO=null;
+document.getElementById('dest-input').addEventListener('input',function(){
+  clearTimeout(acTO);
+  const q=this.value.trim();
+  if(q.length<3){document.getElementById('autocomplete').style.display='none';return;}
+  acTO=setTimeout(()=>fetchSuggestions(q),350);
+});
+
+async function fetchSuggestions(q){
+  try{
+    const r=await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=5&addressdetails=1&countrycodes=in`,
+      {headers:{'Accept-Language':'en'},signal:AbortSignal.timeout(4000)});
+    const d=await r.json();
+    showSuggestions(d);
+  }catch(e){}
+}
+
+function showSuggestions(results){
+  const box=document.getElementById('autocomplete');
+  if(!results||!results.length){box.style.display='none';return;}
+  box.innerHTML='';
+  results.forEach(r=>{
+    const parts=r.display_name.split(',');
+    const name=parts[0].trim();
+    const sub=parts.slice(1,3).join(',').trim();
+    const type=r.type||r.class||'place';
+    const icon=type==='city'||type==='town'?'🏙️':type==='road'||type==='highway'?'🛣️':'📍';
+    const item=document.createElement('div');
+    item.className='ac-item';
+    item.innerHTML=`<div class="ac-icon">${icon}</div><div><div class="ac-name">${name}</div><div class="ac-sub">${sub}</div></div>`;
+    item.onclick=()=>{
+      document.getElementById('dest-input').value=r.display_name.split(',').slice(0,2).join(',');
+      box.style.display='none';
+      searchRoute();
+    };
+    box.appendChild(item);
+  });
+  box.style.display='block';
+}
+
+document.addEventListener('click',e=>{
+  if(!e.target.closest('#topbar')) document.getElementById('autocomplete').style.display='none';
+});
+
 document.getElementById('dest-input').addEventListener('keydown',e=>{
   if(e.key==='Enter') searchRoute();
 });
