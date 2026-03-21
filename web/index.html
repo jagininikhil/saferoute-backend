@@ -587,36 +587,34 @@ async function getWeather(lat,lng){
       );
       const d=await r.json();
       return{
-        temperature:   Math.round(d.main.temp),
-        hu kmdity:      d.main.hu kmdity,
-        visibility:    parseFloat((d.visibility/1000).toFixed(1)),
-        wind_speed:    Math.round(d.wind.speed*3.6),
-        weather:       d.weather[0].id<800?1:0,
-        junction:      0,
-        traffic_signal:0,
-        // ★ NEW fields
-        precipitation: parseFloat(((d.rain?.['1h']||d.snow?.['1h']||0)*0.0394).toFixed(3)), // mm→inches
-        pressure:      parseFloat((d.main.pressure*0.02953).toFixed(2)), // hPa→inHg
-        wind_chill:    Math.round(d.main.feels_like),
-      };
+    temperature: Math.round(28+Math.sin(h/24*Math.PI*2)*6+(Math.random()-.5)*3),
+    humidity: Math.round(60+Math.random()*25),
+    visibility: parseFloat((6+Math.random()*4).toFixed(1)),
+    wind_speed: Math.round(5+Math.random()*15),
+    weather: isRainy?1:0,
+    junction: Math.random()>.82?1:0,
+    traffic_signal: Math.random()>.72?1:0,
+    precipitation: isRainy?parseFloat((Math.random()*3).toFixed(1)):0,
+    pressure: 1013+Math.round((Math.random()-.5)*10),
+    wind_chill: 0
+};
     }catch(e){}
   }
   // Mock — also includes precipitation simulation
   const h=new Date().getHours();
   const isRainy=Math.random()>.78;
   return{
-    temperature:   Math.round(72+Math.sin(h/24*Math.PI*2)*14+(Math.random()-.5)*5),
-    hu kmdity:      Math.round(58+Math.random()*30),
-    visibility:    parseFloat((5+Math.random()*5).toFixed(1)),
-    wind_speed:    Math.round(4+Math.random()*18),
-    weather:       isRainy?1:0,
-    junction:      Math.random()>.82?1:0,
-    traffic_signal:Math.random()>.72?1:0,
-    // ★ NEW mock fields
-    precipitation: isRainy?parseFloat((Math.random()*0.5).toFixed(2)):0,
-    pressure:      parseFloat((29.5+Math.random()*.8).toFixed(2)),
-    wind_chill:    0,
-  };
+    temperature: Math.round(28+Math.sin(h/24*Math.PI*2)*6+(Math.random()-.5)*3),
+    humidity: Math.round(60+Math.random()*25),
+    visibility: parseFloat((6+Math.random()*4).toFixed(1)),
+    wind_speed: Math.round(5+Math.random()*15),
+    weather: isRainy?1:0,
+    junction: Math.random()>.82?1:0,
+    traffic_signal: Math.random()>.72?1:0,
+    precipitation: isRainy?parseFloat((Math.random()*3).toFixed(1)):0,
+    pressure: 1013+Math.round((Math.random()-.5)*10),
+    wind_chill: 0
+};
 }
 
 // ════════════════════════════════════════
@@ -667,7 +665,7 @@ function updateUI(result,w,traffic){
   S.lastTrafficLevel = traffic.level;
   S.weather          = w;
 
-  document.getElementById('m-temp').textContent=w.temperature;
+  document.getElementById('m-temp').textContent=w.temperature+'°';
   document.getElementById('m-hum').textContent=w.hu kmdity+'%';
   document.getElementById('m-vis').textContent=w.visibility+' km';
   document.getElementById('m-traf').textContent=traffic.level;
@@ -689,8 +687,8 @@ function updateUI(result,w,traffic){
   const reasons = result.reasons && result.reasons.length
     ? `Risk factors: ${result.reasons.join(' · ')}`
     : (severity===1?'Road conditions normal. Drive safely.':
-       severity===2?`Moderate risk. Vis ${w.visibility} km, wind ${w.wind_speed} km/h.`:
-       severity===3?`High accident risk! Vis ${w.visibility} km, wind ${w.wind_speed} km/h.`:
+       severity===2?`Moderate risk. Visibility ${w.visibility} km, wind ${w.wind_speed} km/h.`:
+       severity===3?`High accident risk! Visibility ${w.visibility} km, wind ${w.wind_speed} km/h.`:
        'Extreme danger! Consider stopping if safe.');
   document.getElementById('rb-msg').textContent=reasons;
 
