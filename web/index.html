@@ -88,7 +88,7 @@ html,body{width:100%;height:100%;background:#0d0e13;overflow:hidden;font-family:
   border-radius:10px;padding:7px 14px;text-align:center;
   box-shadow:var(--sh);min-width:58px;
 }
-#spd{font-family:var(--font);font-size:26px;font-weight:700;line-height:1}
+#spd-val{font-family:var(--font);font-size:26px;font-weight:700;line-height:1}
 #spd-unit{font-size:10px;color:var(--muted);letter-spacing:.5px;margin-top:1px}
 
 /* FABs */
@@ -463,7 +463,7 @@ function applyPos(p){
   gpsMark.setLatLng([S.lat,S.lng]);
   gpsAcc.setLatLng([S.lat,S.lng]);
   if(p.coords.accuracy) gpsAcc.setRadius(Math.min(p.coords.accuracy,120));
-  document.getElementById('spd').textContent = S.speed||0;
+  document.getElementById('spd-val').textContent = S.speed||0;
   document.getElementById('nav-speed').textContent = S.speed||0;
 }
 
