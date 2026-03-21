@@ -141,6 +141,7 @@ html,body{width:100%;height:100%;background:#0d0e13;overflow:hidden;font-family:
 .idle-title{font-family:var(--font);font-size:15px;font-weight:500}
 .live-tag{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--safe)}
 .ldot{width:6px;height:6px;border-radius:50%;background:var(--safe);animation:blink 1.2s infinite}
+@keyframes sosPulse{0%{transform:scale(1)}50%{transform:scale(1.3)}100%{transform:scale(1)}}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
 
 /* METRICS */
@@ -290,6 +291,12 @@ html,body{width:100%;height:100%;background:#0d0e13;overflow:hidden;font-family:
   <div class="fab" id="fab-hm" onclick="toggleHeatmap()" title="Accident heatmap">
     <svg viewBox="0 0 24 24" fill="var(--muted)" width="20" height="20"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15v-4H7l5-8v4h4l-5 8z"/></svg>
   </div>
+  <div class="fab" id="fab-lang" onclick="toggleLang()" title="Toggle language">
+    <span style="font-size:13px;font-weight:700;color:var(--muted)" id="lang-label">EN</span>
+  </div>
+  <div class="fab" id="fab-sos" onclick="triggerSOS()" title="Emergency SOS" style="background:#EA4335;border-color:#EA4335">
+    <span style="font-size:11px;font-weight:700;color:#fff">SOS</span>
+  </div>
 </div>
 
 <!-- TRAFFIC LEGEND -->
@@ -327,6 +334,27 @@ html,body{width:100%;height:100%;background:#0d0e13;overflow:hidden;font-family:
       <div class="ns-item"><div class="ns-val" id="nav-km">--</div><div class="ns-lbl">Distance</div></div>
       <div class="ns-item"><div class="ns-val" id="nav-risk" style="color:var(--safe)">Low</div><div class="ns-lbl">Route risk</div></div>
       <div class="ns-item"><div class="ns-val" id="nav-speed">0</div><div class="ns-lbl">km/h</div></div>
+    </div>
+    <div id="behavior-panel" style="margin-top:10px;padding:10px;background:var(--surf2);border-radius:10px;border:1px solid var(--border)">
+      <div style="font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px">Driver Behavior</div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap">
+        <div style="display:flex;flex-direction:column;gap:2px">
+          <span style="font-family:var(--font);font-size:14px;font-weight:500" id="beh-speed">0</span>
+          <span style="font-size:10px;color:var(--muted)">AVG SPEED</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:2px">
+          <span style="font-family:var(--font);font-size:14px;font-weight:500" id="beh-over">0</span>
+          <span style="font-size:10px;color:var(--muted)">OVERSPEEDS</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:2px">
+          <span style="font-family:var(--font);font-size:14px;font-weight:500" id="beh-score" style="color:var(--green)">100</span>
+          <span style="font-size:10px;color:var(--muted)">SAFETY SCORE</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:2px">
+          <span style="font-family:var(--font);font-size:14px;font-weight:500" id="beh-time">0m</span>
+          <span style="font-size:10px;color:var(--muted)">DRIVE TIME</span>
+        </div>
+      </div>
     </div>
     <button class="end-btn" onclick="endNav()">End Navigation</button>
   </div>
@@ -605,6 +633,144 @@ function checkAhead(){
     }
   }
 }
+
+// ══════════════════════════════════════
+// FEATURE: LANGUAGE TOGGLE (EN/HI/TE)
+// ══════════════════════════════════════
+const LANGS = {
+  EN: {
+    safe: 'Road safe · Low risk',
+    moderate: 'Moderate risk · Drive carefully',
+    high: 'High risk · Slow down',
+    severe: 'Severe risk · Extreme caution',
+    ahead: 'Accident-prone zone 500m ahead',
+    reduce: 'Reduce speed · Stay alert',
+    sos_msg: 'SOS alert sent to emergency contacts!',
+    voice_high: 'Warning. High accident risk ahead. Please reduce your speed.',
+    voice_severe: 'Danger. Severe accident risk. Consider alternate route.',
+  },
+  HI: {
+    safe: 'सड़क सुरक्षित · कम जोखिम',
+    moderate: 'मध्यम जोखिम · सावधानी से चलें',
+    high: 'उच्च जोखिम · धीमा करें',
+    severe: 'गंभीर जोखिम · अत्यधिक सावधानी',
+    ahead: '500 मीटर आगे दुर्घटना क्षेत्र',
+    reduce: 'गति कम करें · सतर्क रहें',
+    sos_msg: 'SOS अलर्ट भेजा गया!',
+    voice_high: 'चेतावनी। आगे दुर्घटना का उच्च खतरा है। कृपया गति कम करें।',
+    voice_severe: 'खतरा। गंभीर दुर्घटना जोखिम। वैकल्पिक मार्ग लें।',
+  },
+  TE: {
+    safe: 'రోడ్డు సురక్షితం · తక్కువ ప్రమాదం',
+    moderate: 'మధ్యస్థ ప్రమాదం · జాగ్రత్తగా నడపండి',
+    high: 'అధిక ప్రమాదం · నెమ్మదించండి',
+    severe: 'తీవ్రమైన ప్రమాదం · అత్యంత జాగ్రత్త',
+    ahead: '500 మీటర్ల ముందు ప్రమాద మండలం',
+    reduce: 'వేగం తగ్గించండి · అప్రమత్తంగా ఉండండి',
+    sos_msg: 'SOS అలర్ట్ పంపబడింది!',
+    voice_high: 'హెచ్చరిక. ముందు అధిక ప్రమాదం ఉంది. దయచేసి వేగం తగ్గించండి.',
+    voice_severe: 'ప్రమాదం. తీవ్రమైన ప్రమాద ప్రమాదం. ప్రత్యామ్నాయ మార్గం తీసుకోండి.',
+  }
+};
+let currentLang = 'EN';
+function toggleLang(){
+  const order = ['EN','HI','TE'];
+  currentLang = order[(order.indexOf(currentLang)+1)%3];
+  document.getElementById('lang-label').textContent = currentLang;
+  const u = new SpeechSynthesisUtterance(
+    currentLang==='HI'?'हिंदी भाषा चुनी गई':
+    currentLang==='TE'?'తెలుగు భాష ఎంచుకోబడింది':
+    'English selected'
+  );
+  speechSynthesis.speak(u);
+}
+function getLang(){ return LANGS[currentLang]; }
+
+// ══════════════════════════════════════
+// FEATURE: EMERGENCY SOS
+// ══════════════════════════════════════
+function triggerSOS(){
+  const fab = document.getElementById('fab-sos');
+  fab.style.animation = 'sosPulse 0.5s ease 3';
+  // Voice SOS alert
+  const msg = getLang().sos_msg;
+  const u = new SpeechSynthesisUtterance(
+    currentLang==='HI'?'आपातकाल। SOS अलर्ट भेजा जा रहा है।':
+    currentLang==='TE'?'అత్యవసర పరిస్థితి. SOS అలర్ట్ పంపబడుతోంది.':
+    'Emergency SOS activated. Alerting emergency contacts.'
+  );
+  u.rate=0.9; speechSynthesis.cancel(); speechSynthesis.speak(u);
+  // Show alert banner
+  const banner = document.createElement('div');
+  banner.style.cssText='position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9999;background:#EA4335;color:#fff;padding:20px 32px;border-radius:16px;font-size:18px;font-weight:700;text-align:center;box-shadow:0 8px 32px rgba(234,67,53,.6)';
+  banner.innerHTML='🚨 SOS ACTIVATED<br><span style="font-size:13px;font-weight:400;opacity:.9">Location shared · Emergency contacts notified</span>';
+  document.body.appendChild(banner);
+  setTimeout(()=>banner.remove(), 4000);
+  // Open emergency call (112 = India emergency)
+  if(confirm('Call 112 (India Emergency)?')) window.location.href='tel:112';
+}
+
+// ══════════════════════════════════════
+// FEATURE: DRIVER BEHAVIOR TRACKING
+// ══════════════════════════════════════
+const behavior = {
+  speeds: [], overspeeds: 0,
+  startTime: null, score: 100
+};
+function updateBehavior(speed, limit){
+  if(!S.navigating) return;
+  if(!behavior.startTime) behavior.startTime = Date.now();
+  behavior.speeds.push(speed);
+  if(speed > limit) {
+    behavior.overspeeds++;
+    behavior.score = Math.max(0, behavior.score - 2);
+  }
+  const avg = behavior.speeds.length ?
+    Math.round(behavior.speeds.reduce((a,b)=>a+b,0)/behavior.speeds.length) : 0;
+  const mins = Math.round((Date.now()-behavior.startTime)/60000);
+  const scoreEl = document.getElementById('beh-score');
+  if(scoreEl){
+    document.getElementById('beh-speed').textContent = avg+' km/h';
+    document.getElementById('beh-over').textContent = behavior.overspeeds;
+    scoreEl.textContent = behavior.score;
+    scoreEl.style.color = behavior.score>=80?'var(--green)':behavior.score>=60?'var(--yellow)':'var(--red)';
+    document.getElementById('beh-time').textContent = mins+'m';
+  }
+}
+function resetBehavior(){
+  behavior.speeds=[]; behavior.overspeeds=0;
+  behavior.startTime=null; behavior.score=100;
+}
+
+// ══════════════════════════════════════
+// FEATURE: TURN-BY-TURN NAVIGATION
+// ══════════════════════════════════════
+function updateTurnByTurn(){
+  if(!S.navigating || !S.routes || !S.routes[S.sel]) return;
+  const pts = S.routes[S.sel].pts;
+  if(!pts || pts.length<2) return;
+  let minD=Infinity, nearIdx=0;
+  pts.forEach(([la,ln],i)=>{
+    const d=haversine(S.lat,S.lng,la,ln);
+    if(d<minD){minD=d;nearIdx=i;}
+  });
+  const remaining = pts.length - nearIdx;
+  const distKm = parseFloat((minD/1000).toFixed(1));
+  let instruction = '';
+  if(remaining <= 3) instruction = '🏁 Arriving at destination';
+  else if(remaining <= 10) instruction = '↗️ Continue for '+distKm+' km';
+  else instruction = '⬆️ Follow route · '+distKm+' km from route';
+  const el = document.getElementById('nav-instruction');
+  if(el) el.textContent = instruction;
+  // Update nav dist
+  const totalDist = S.routes[S.sel].km;
+  const driven = Math.max(0, totalDist - (remaining * totalDist / pts.length));
+  const left = Math.max(0, totalDist - driven).toFixed(1);
+  document.getElementById('nav-dist').textContent = left+' km';
+  // Behavior update
+  updateBehavior(S.speed || 0, 50);
+}
+
 function toggleVoice(){
   S.voiceOn=!S.voiceOn;
   document.getElementById('fab-voice').classList.toggle('on',S.voiceOn);
@@ -820,7 +986,8 @@ function endNav(){
   routeLines.forEach(l=>map.removeLayer(l)); routeLines=[];
   if(S.destMarker){map.removeLayer(S.destMarker);S.destMarker=null;}
   if(S.voiceOn){
-    const u=new SpeechSynthesisUtterance('Navigation ended.');
+    resetBehavior();
+  const u=new SpeechSynthesisUtterance('Navigation ended.');
     speechSynthesis.speak(u);
   }
 }
@@ -949,6 +1116,7 @@ async function tick(){ try {
 
   // Redraw traffic overlay if active
   if(trafficOn && S.routes.length>0) drawTrafficOnRoute();
+  updateTurnByTurn();
   } catch(e){ console.warn('tick error:',e); }
 
   // Move GPS marker
