@@ -355,7 +355,7 @@ html,body{width:100%;height:100%;background:#0d0e13;overflow:hidden;font-family:
 // CONFIG — edit these
 // ═══════════════════════════════════════════════════════
 const API   = 'http://localhost:5000/predict';  // your Flask backend
-const OWM   = '';                               // OpenWeatherMap key (leave blank = mock weather)
+const OWM = '15f91917e6fac8819f5acbd5a2100cb3';                               // OpenWeatherMap key (leave blank = mock weather)
 const TICK  = 5000;                             // prediction interval ms
 
 // ═══════════════════════════════════════════════════════
@@ -430,7 +430,7 @@ function recenter(){ map.flyTo([S.lat,S.lng],15,{duration:.5}); }
 async function getWeather(lat,lng){
   if(OWM){
     try{
-      const r=await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${OWM}&units=imperial`,{signal:AbortSignal.timeout(4000)});
+      const r=await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${OWM}&units=metric`,{signal:AbortSignal.timeout(4000)});
       const d=await r.json();
       return{
         temperature:Math.round(d.main.temp),
@@ -445,7 +445,7 @@ async function getWeather(lat,lng){
   // Mock — realistic time-of-day variation
   const h=new Date().getHours();
   return{
-    temperature:Math.round(72+Math.sin(h/24*Math.PI*2)*14+(Math.random()-.5)*5),
+    temperature:Math.round(30+Math.sin(h/24*Math.PI*2)*6+(Math.random()-.5)*3),
     humidity:   Math.round(58+Math.random()*30),
     visibility: parseFloat((5+Math.random()*5).toFixed(1)),
     wind_speed: Math.round(4+Math.random()*18),
