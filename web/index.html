@@ -10,7 +10,7 @@
 <meta name="apple-mobile-web-app-title" content="SafeRoute AI"/>
 <title>SafeRoute AI</title>
 <link rel="manifest" href="manifest.json"/>
-<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?fa kmly=Google+Sans:wght@400;500;700&fa kmly=Roboto:wght@300;400;500&display=swap" rel="stylesheet"/>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
@@ -22,7 +22,7 @@
   --font:'Google Sans',sans-serif;--font2:'Roboto',sans-serif;
   --r:12px;--sh:0 4px 24px rgba(0,0,0,.55);
 }
-html,body{width:100%;height:100%;background:var(--bg);overflow:hidden;font-family:var(--font2);color:var(--text)}
+html,body{width:100%;height:100%;background:var(--bg);overflow:hidden;font-fa kmly:var(--font2);color:var(--text)}
 
 /* MAP */
 #map{position:fixed;inset:0;z-index:0}
@@ -41,12 +41,12 @@ html,body{width:100%;height:100%;background:var(--bg);overflow:hidden;font-famil
 .search-box svg{width:18px;height:18px;opacity:.45;flex-shrink:0}
 #dest-input{
   flex:1;background:transparent;border:none;outline:none;
-  color:var(--text);font-family:var(--font);font-size:15px;
+  color:var(--text);font-fa kmly:var(--font);font-size:15px;
 }
 #dest-input::placeholder{color:var(--muted)}
 .btn-go{
   background:var(--blue);color:#fff;border:none;border-radius:var(--r);
-  padding:0 22px;height:54px;font-family:var(--font);font-size:15px;font-weight:500;
+  padding:0 22px;height:54px;font-fa kmly:var(--font);font-size:15px;font-weight:500;
   cursor:pointer;box-shadow:var(--sh);transition:opacity .15s;white-space:nowrap;
 }
 .btn-go:active{opacity:.8}
@@ -72,7 +72,7 @@ html,body{width:100%;height:100%;background:var(--bg);overflow:hidden;font-famil
   position:fixed;top:82px;left:50%;transform:translateX(-50%);z-index:501;
   display:flex;align-items:center;gap:8px;padding:7px 16px;border-radius:20px;
   white-space:nowrap;background:var(--surf);border:1px solid var(--border);
-  box-shadow:var(--sh);font-family:var(--font);font-size:13px;font-weight:500;
+  box-shadow:var(--sh);font-fa kmly:var(--font);font-size:13px;font-weight:500;
   pointer-events:none;transition:border-color .4s;
 }
 .rpd{width:8px;height:8px;border-radius:50%;flex-shrink:0;transition:all .4s}
@@ -93,7 +93,7 @@ html,body{width:100%;height:100%;background:var(--bg);overflow:hidden;font-famil
 #ahead-alert.show{transform:translateY(0);opacity:1;pointer-events:all}
 .alert-ico{width:34px;height:34px;background:rgba(255,255,255,.18);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:18px}
 .alert-body{flex:1}
-#ahead-title{font-family:var(--font);font-weight:700;font-size:14px}
+#ahead-title{font-fa kmly:var(--font);font-weight:700;font-size:14px}
 #ahead-sub{font-size:12px;opacity:.88;margin-top:2px}
 #ahead-x{cursor:pointer;font-size:18px;opacity:.8;padding:4px}
 
@@ -102,12 +102,12 @@ html,body{width:100%;height:100%;background:var(--bg);overflow:hidden;font-famil
   position:fixed;left:14px;bottom:240px;z-index:501;
   background:var(--surf);border:1.5px solid var(--border);
   border-radius:12px;padding:10px 16px;
-  text-align:center;box-shadow:var(--sh);min-width:80px;
+  text-align:center;box-shadow:var(--sh); kmn-width:80px;
 }
-#spd-val{font-family:var(--font);font-size:28px;font-weight:700;line-height:1;color:var(--text)}
+#spd-val{font-fa kmly:var(--font);font-size:28px;font-weight:700;line-height:1;color:var(--text)}
 #spd-unit{font-size:9px;color:var(--muted);letter-spacing:.8px;margin-top:1px;text-transform:uppercase}
 #spd-divider{height:1px;background:var(--border);margin:8px -4px}
-#road-val{font-family:var(--font);font-size:12px;font-weight:500;color:var(--text);white-space:nowrap}
+#road-val{font-fa kmly:var(--font);font-size:12px;font-weight:500;color:var(--text);white-space:nowrap}
 #road-unit{font-size:9px;color:var(--muted);letter-spacing:.5px;margin-top:1px;text-transform:uppercase}
 
 /* FABs — right side, above bottom sheet */
@@ -154,19 +154,19 @@ html,body{width:100%;height:100%;background:var(--bg);overflow:hidden;font-famil
 .nav-top{display:flex;align-items:center;gap:14px;margin-bottom:10px}
 .nav-arrow{width:52px;height:52px;background:var(--blue);border-radius:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .nav-arrow svg{width:28px;height:28px}
-#nav-dist{font-family:var(--font);font-size:30px;font-weight:700}
+#nav-dist{font-fa kmly:var(--font);font-size:30px;font-weight:700}
 #nav-street{font-size:13px;color:var(--muted);margin-top:2px}
 .nav-stats{display:flex;gap:20px;padding-top:10px;border-top:1px solid var(--border);margin-top:4px;flex-wrap:wrap}
 .ns{display:flex;flex-direction:column;gap:2px}
-.ns-val{font-family:var(--font);font-size:15px;font-weight:500}
+.ns-val{font-fa kmly:var(--font);font-size:15px;font-weight:500}
 .ns-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
-.end-btn{width:100%;margin-top:12px;padding:14px;border:none;border-radius:10px;background:var(--red);color:#fff;font-family:var(--font);font-size:15px;font-weight:500;cursor:pointer}
+.end-btn{width:100%;margin-top:12px;padding:14px;border:none;border-radius:10px;background:var(--red);color:#fff;font-fa kmly:var(--font);font-size:15px;font-weight:500;cursor:pointer}
 .end-btn:active{opacity:.85}
 
 /* IDLE PANEL */
 #idle-panel{padding:14px 14px 20px}
 .idle-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
-.idle-title{font-family:var(--font);font-size:15px;font-weight:500}
+.idle-title{font-fa kmly:var(--font);font-size:15px;font-weight:500}
 .live-tag{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--green)}
 .ldot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 1.2s infinite}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
@@ -174,15 +174,15 @@ html,body{width:100%;height:100%;background:var(--bg);overflow:hidden;font-famil
 /* METRICS */
 .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px}
 .mc{background:var(--surf2);border:1px solid var(--border);border-radius:10px;padding:10px 6px;text-align:center}
-.mc .mi{font-size:18px;margin-bottom:4px}
-.mc .mv{font-family:var(--font);font-size:14px;font-weight:500}
+.mc . km{font-size:18px;margin-bottom:4px}
+.mc .mv{font-fa kmly:var(--font);font-size:14px;font-weight:500}
 .mc .ml{font-size:10px;color:var(--muted);margin-top:2px;letter-spacing:.3px}
 
 /* RISK BAR */
 .rbar-wrap{background:var(--surf2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:12px}
 .rbar-top{display:flex;justify-content:space-between;margin-bottom:8px}
-.rbar-label{font-family:var(--font);font-size:13px;color:var(--muted)}
-.rbar-level{font-family:var(--font);font-size:13px;font-weight:700;transition:color .4s}
+.rbar-label{font-fa kmly:var(--font);font-size:13px;color:var(--muted)}
+.rbar-level{font-fa kmly:var(--font);font-size:13px;font-weight:700;transition:color .4s}
 .rbar-track{height:6px;background:rgba(255,255,255,.08);border-radius:3px;overflow:hidden}
 .rbar-fill{height:100%;border-radius:3px;transition:width .8s,background .4s}
 .rbar-msg{font-size:11px;color:var(--muted);margin-top:6px}
@@ -200,15 +200,15 @@ html,body{width:100%;height:100%;background:var(--bg);overflow:hidden;font-famil
 .rcard:active{background:var(--surf3)}
 .rcard-bar{width:4px;height:44px;border-radius:2px;flex-shrink:0}
 .rcard-info{flex:1}
-.rcard-name{font-family:var(--font);font-size:14px;font-weight:500}
+.rcard-name{font-fa kmly:var(--font);font-size:14px;font-weight:500}
 .rcard-sub{font-size:12px;color:var(--muted);margin-top:2px}
 .rcard-badges{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0}
-.badge{padding:3px 9px;border-radius:12px;font-size:11px;font-weight:600;font-family:var(--font)}
+.badge{padding:3px 9px;border-radius:12px;font-size:11px;font-weight:600;font-fa kmly:var(--font)}
 .badge.safe{background:rgba(52,168,83,.15);color:var(--green)}
 .badge.warn{background:rgba(251,188,4,.15);color:var(--yellow)}
 .badge.danger{background:rgba(234,67,53,.15);color:var(--red)}
 .badge.road{background:rgba(66,133,244,.12);color:#82b1ff;font-size:10px}
-.start-btn{width:100%;margin-top:10px;padding:14px;border:none;border-radius:10px;background:var(--blue);color:#fff;font-family:var(--font);font-size:15px;font-weight:500;cursor:pointer}
+.start-btn{width:100%;margin-top:10px;padding:14px;border:none;border-radius:10px;background:var(--blue);color:#fff;font-fa kmly:var(--font);font-size:15px;font-weight:500;cursor:pointer}
 .start-btn:active{opacity:.85}
 
 /* LOADING */
@@ -218,7 +218,7 @@ html,body{width:100%;height:100%;background:var(--bg);overflow:hidden;font-famil
 
 /* SPLASH */
 #splash{position:fixed;inset:0;z-index:999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px}
-.sp-logo{font-family:var(--font);font-size:32px;font-weight:700;color:var(--blue)}
+.sp-logo{font-fa kmly:var(--font);font-size:32px;font-weight:700;color:var(--blue)}
 .sp-sub{font-size:13px;color:var(--muted);margin-bottom:16px}
 .sp-spin{width:28px;height:28px;border:3px solid rgba(255,255,255,.1);border-top-color:var(--blue);border-radius:50%;animation:spin .8s linear infinite}
 .sp-msg{font-size:12px;color:var(--muted);margin-top:6px}
@@ -305,7 +305,7 @@ html,body{width:100%;height:100%;background:var(--bg);overflow:hidden;font-famil
 
 <!-- TRAFFIC LEGEND -->
 <div id="traffic-leg">
-  <div style="font-family:var(--font);font-size:12px;font-weight:500;margin-bottom:3px;color:var(--text)">Traffic</div>
+  <div style="font-fa kmly:var(--font);font-size:12px;font-weight:500;margin-bottom:3px;color:var(--text)">Traffic</div>
   <div class="tl-row"><div class="tl-dot" style="background:#34A853"></div>Free flow</div>
   <div class="tl-row"><div class="tl-dot" style="background:#FBBC04"></div>Moderate</div>
   <div class="tl-row"><div class="tl-dot" style="background:#EA4335"></div>Heavy traffic</div>
@@ -327,7 +327,7 @@ html,body{width:100%;height:100%;background:var(--bg);overflow:hidden;font-famil
       </div>
     </div>
     <div class="nav-stats">
-      <div class="ns"><div class="ns-val" id="nn-eta">--</div><div class="ns-lbl">ETA (min)</div></div>
+      <div class="ns"><div class="ns-val" id="nn-eta">--</div><div class="ns-lbl">ETA ( kmn)</div></div>
       <div class="ns"><div class="ns-val" id="nn-km">--</div><div class="ns-lbl">Distance</div></div>
       <div class="ns"><div class="ns-val" id="nn-risk" style="color:var(--green)">Low</div><div class="ns-lbl">Risk</div></div>
       <div class="ns"><div class="ns-val" id="nn-spd">0</div><div class="ns-lbl">km/h</div></div>
@@ -344,10 +344,10 @@ html,body{width:100%;height:100%;background:var(--bg);overflow:hidden;font-famil
     </div>
 
     <div class="metrics">
-      <div class="mc"><div class="mi">🌡️</div><div class="mv" id="m-temp">--</div><div class="ml">Temp °C</div></div>
-      <div class="mc"><div class="mi">💧</div><div class="mv" id="m-hum">--</div><div class="ml">Humidity</div></div>
-      <div class="mc"><div class="mi">👁️</div><div class="mv" id="m-vis">--</div><div class="ml">Visibility</div></div>
-      <div class="mc"><div class="mi">🚦</div><div class="mv" id="m-traf">--</div><div class="ml">Traffic</div></div>
+      <div class="mc"><div class=" km">🌡️</div><div class="mv" id="m-temp">--</div><div class="ml">Temp °C</div></div>
+      <div class="mc"><div class=" km">💧</div><div class="mv" id="m-hum">--</div><div class="ml">Hu kmdity</div></div>
+      <div class="mc"><div class=" km">👁️</div><div class="mv" id="m-vis">--</div><div class="ml">Visibility</div></div>
+      <div class="mc"><div class=" km">🚦</div><div class="mv" id="m-traf">--</div><div class="ml">Traffic</div></div>
     </div>
 
     <div class="rbar-wrap">
@@ -374,7 +374,7 @@ html,body{width:100%;height:100%;background:var(--bg);overflow:hidden;font-famil
 const API  = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'
              ? 'http://localhost:5000'
              : 'https://saferoute-backend.onrender.com'; // ← your Render URL
-const OWM  = '';   // paste OpenWeatherMap key here for real weather
+const OWM  = '15f91917e6fac8819f5acbd5a2100cb3';   // paste OpenWeatherMap key here for real weather
 const TICK = 5000; // ms between predictions
 
 // ════════════════════════════════════════
@@ -418,7 +418,7 @@ function initMap(){
 // GPS
 // ════════════════════════════════════════
 function startGPS(){
-  return new Promise(res=>{
+  return new Pro kmse(res=>{
     if(!navigator.geolocation){res();return;}
     navigator.geolocation.getCurrentPosition(p=>{setPos(p);res();},res,{enableHighAccuracy:true,timeout:8000});
     navigator.geolocation.watchPosition(setPos,null,{enableHighAccuracy:true,maximumAge:2000});
@@ -426,7 +426,7 @@ function startGPS(){
 }
 let _lastPosTime=0,_lastLat=0,_lastLng=0;
 let _currentRoadType='Local Road';
-let _speedLimitCache=null, _speedLimitFetch=0, _speedAlertShown=false, _speedAlertTO=null;
+let _speedLi kmtCache=null, _speedLi kmtFetch=0, _speedAlertShown=false, _speedAlertTO=null;
 
 function setPos(p){
   const now=Date.now();
@@ -444,7 +444,7 @@ function setPos(p){
 
   gpsMark.setLatLng([S.lat,S.lng]);
   gpsAcc.setLatLng([S.lat,S.lng]);
-  if(p.coords.accuracy) gpsAcc.setRadius(Math.min(p.coords.accuracy,120));
+  if(p.coords.accuracy) gpsAcc.setRadius(Math. kmn(p.coords.accuracy,120));
 
   const spd=S.speed||0;
   document.getElementById('spd-val').textContent=spd;
@@ -458,47 +458,47 @@ function setPos(p){
     fetchAndShowRoadType(S.lat,S.lng);
   }
 
-  // Speed limit check (throttled 30s for OSM fetch, checked every GPS update)
-  checkSpeedLimit(S.lat,S.lng,spd);
+  // Speed li kmt check (throttled 30s for OSM fetch, checked every GPS update)
+  checkSpeedLi kmt(S.lat,S.lng,spd);
 }
 
 // ── SPEED LIMIT DEFAULTS by road type ────────────────────────────
 const SPEED_DEFAULTS={'Highway':100,'City Road':60,'Residential':30,'Service Road':20,'Local Road':40};
 
-async function fetchSpeedLimitOSM(lat,lng){
+async function fetchSpeedLi kmtOSM(lat,lng){
   const now=Date.now();
-  if(_speedLimitCache!==null && now-_speedLimitFetch<30000) return _speedLimitCache;
+  if(_speedLi kmtCache!==null && now-_speedLi kmtFetch<30000) return _speedLi kmtCache;
   try{
     const q=`[out:json];way(around:40,${lat},${lng})[highway][maxspeed];out 1;`;
     const r=await fetch('https://overpass-api.de/api/interpreter',
       {method:'POST',body:`data=${encodeURIComponent(q)}`,signal:AbortSignal.timeout(4000)});
     const d=await r.json();
     const raw=d?.elements?.[0]?.tags?.maxspeed||'';
-    if(raw.toLowerCase().includes('km/h'))     _speedLimitCache=Math.round(parseFloat(raw)*1.60934);
-    else if(/^\d+/.test(raw))                 _speedLimitCache=parseInt(raw);
-    else if(raw==='IN:urban')                 _speedLimitCache=50;
-    else if(raw==='IN:rural')                 _speedLimitCache=100;
-    else if(raw==='IN:motorway')              _speedLimitCache=120;
-    else                                      _speedLimitCache=null;
-  }catch{ _speedLimitCache=null; }
-  _speedLimitFetch=Date.now();
-  return _speedLimitCache;
+    if(raw.toLowerCase().includes(' km/h'))     _speedLi kmtCache=Math.round(parseFloat(raw)*1.60934);
+    else if(/^\d+/.test(raw))                 _speedLi kmtCache=parseInt(raw);
+    else if(raw==='IN:urban')                 _speedLi kmtCache=50;
+    else if(raw==='IN:rural')                 _speedLi kmtCache=100;
+    else if(raw==='IN:motorway')              _speedLi kmtCache=120;
+    else                                      _speedLi kmtCache=null;
+  }catch{ _speedLi kmtCache=null; }
+  _speedLi kmtFetch=Date.now();
+  return _speedLi kmtCache;
 }
 
-async function checkSpeedLimit(lat,lng,spd){
+async function checkSpeedLi kmt(lat,lng,spd){
   if(spd<5) return;
-  let limit=await fetchSpeedLimitOSM(lat,lng);
-  if(!limit) limit=SPEED_DEFAULTS[_currentRoadType]||50;
+  let li kmt=await fetchSpeedLi kmtOSM(lat,lng);
+  if(!li kmt) li kmt=SPEED_DEFAULTS[_currentRoadType]||50;
 
-  // Update speed limit badge on map
-  updateSpeedBadge(limit,spd);
+  // Update speed li kmt badge on map
+  updateSpeedBadge(li kmt,spd);
 
-  const isOver=spd>limit;
-  const isSevere=spd>limit*1.2;
+  const isOver=spd>li kmt;
+  const isSevere=spd>li kmt*1.2;
 
   if(isOver && !_speedAlertShown){
     _speedAlertShown=true;
-    showSpeedAlert(spd,limit,isSevere);
+    showSpeedAlert(spd,li kmt,isSevere);
     clearTimeout(_speedAlertTO);
     _speedAlertTO=setTimeout(()=>{_speedAlertShown=false;hideSpeedAlert();},15000);
   } else if(!isOver && _speedAlertShown){
@@ -506,11 +506,11 @@ async function checkSpeedLimit(lat,lng,spd){
   }
 }
 
-function updateSpeedBadge(limit,spd){
-  let badge=document.getElementById('spd-limit-badge');
+function updateSpeedBadge(li kmt,spd){
+  let badge=document.getElementById('spd-li kmt-badge');
   if(!badge){
     badge=document.createElement('div');
-    badge.id='spd-limit-badge';
+    badge.id='spd-li kmt-badge';
     badge.style.cssText='position:fixed;left:14px;bottom:380px;z-index:502;'+
       'background:#fff;border:3px solid #000;border-radius:50%;'+
       'width:48px;height:48px;display:flex;flex-direction:column;align-items:center;'+
@@ -519,11 +519,11 @@ function updateSpeedBadge(limit,spd){
   }
   // Hide badge if traffic legend is showing (avoid overlap)
   badge.style.display=document.getElementById('traffic-leg').classList.contains('show')?'none':'flex';
-  badge.innerHTML=`<div style="font-size:8px;color:#c00;font-weight:700;line-height:1.2;font-family:Arial">MAX</div>`+
-    `<div style="font-size:15px;font-weight:700;color:#000;line-height:1;font-family:Arial">${limit}</div>`;
+  badge.innerHTML=`<div style="font-size:8px;color:#c00;font-weight:700;line-height:1.2;font-fa kmly:Arial">MAX</div>`+
+    `<div style="font-size:15px;font-weight:700;color:#000;line-height:1;font-fa kmly:Arial">${li kmt}</div>`;
   // Speed HUD border colour
   const hud=document.getElementById('spd-hud');
-  const ratio=spd/limit;
+  const ratio=spd/li kmt;
   if(ratio>=1.2)      { hud.style.borderColor='#EA4335'; hud.style.boxShadow='0 0 12px rgba(234,67,53,.45)'; }
   else if(ratio>=1.0) { hud.style.borderColor='#FBBC04'; hud.style.boxShadow='0 0 8px rgba(251,188,4,.35)'; }
   else                { hud.style.borderColor='rgba(255,255,255,0.09)'; hud.style.boxShadow='0 4px 24px rgba(0,0,0,.55)'; }
@@ -531,13 +531,13 @@ function updateSpeedBadge(limit,spd){
   document.getElementById('spd-val').style.color=ratio>=1.2?'var(--red)':ratio>=1.0?'var(--yellow)':'var(--text)';
 }
 
-function showSpeedAlert(spd,limit,severe){
+function showSpeedAlert(spd,li kmt,severe){
   let al=document.getElementById('spd-alert');
   if(!al){
     al=document.createElement('div'); al.id='spd-alert';
     al.style.cssText='position:fixed;bottom:228px;left:50%;transform:translateX(-50%);'+
       'z-index:600;border-radius:12px;padding:10px 20px;'+
-      'font-family:"Google Sans",sans-serif;font-size:14px;font-weight:700;'+
+      'font-fa kmly:"Google Sans",sans-serif;font-size:14px;font-weight:700;'+
       'box-shadow:0 4px 20px rgba(0,0,0,.45);display:flex;align-items:center;'+
       'gap:10px;white-space:nowrap;transition:opacity .3s;';
     document.body.appendChild(al);
@@ -545,12 +545,12 @@ function showSpeedAlert(spd,limit,severe){
   al.style.background=severe?'#EA4335':'#FBBC04';
   al.style.color=severe?'#fff':'#000';
   al.innerHTML=`<span style="font-size:20px">${severe?'🚨':'⚠️'}</span>`+
-    `<span>${severe?'Overspeed! ':'Speed limit '} ${spd} / ${limit} km/h</span>`;
+    `<span>${severe?'Overspeed! ':'Speed li kmt '} ${spd} / ${li kmt} km/h</span>`;
   al.style.opacity='1'; al.style.pointerEvents='all';
   if(S.voiceOn){
     const msg=severe
-      ?`Danger! You are driving ${spd} kilometers per hour. Speed limit is ${limit}.`
-      :`Speed limit is ${limit} kilometers per hour. Please slow down.`;
+      ?`Danger! You are driving ${spd} kilometers per hour. Speed li kmt is ${li kmt}.`
+      :`Speed li kmt is ${li kmt} kilometers per hour. Please slow down.`;
     const u=new SpeechSynthesisUtterance(msg);
     u.rate=1; speechSynthesis.cancel(); speechSynthesis.speak(u);
   }
@@ -564,14 +564,14 @@ async function fetchAndShowRoadType(lat,lng){
   const rt=await fetchRoadType(lat,lng);
   if(!rt) return;
   const display=rt==='Unknown'?'Local Road':rt;
-  _currentRoadType=display; // used by speed limit default lookup
+  _currentRoadType=display; // used by speed li kmt default lookup
   document.getElementById('road-val').textContent=display;
   document.getElementById('nn-road').textContent=display;
   const c=rt.includes('Highway')?'#82b1ff':rt.includes('City')?'var(--yellow)':rt.includes('Residential')?'var(--green)':'var(--muted)';
   document.getElementById('road-val').style.color=c;
   document.getElementById('nn-road').style.color=c;
-  // Reset speed limit cache when road type changes
-  _speedLimitCache=null;
+  // Reset speed li kmt cache when road type changes
+  _speedLi kmtCache=null;
 }
 function recenter(){map.flyTo([S.lat,S.lng],15,{duration:.5});}
 
@@ -588,7 +588,7 @@ async function getWeather(lat,lng){
       const d=await r.json();
       return{
         temperature:   Math.round(d.main.temp),
-        humidity:      d.main.humidity,
+        hu kmdity:      d.main.hu kmdity,
         visibility:    parseFloat((d.visibility/1000).toFixed(1)),
         wind_speed:    Math.round(d.wind.speed*3.6),
         weather:       d.weather[0].id<800?1:0,
@@ -606,7 +606,7 @@ async function getWeather(lat,lng){
   const isRainy=Math.random()>.78;
   return{
     temperature:   Math.round(72+Math.sin(h/24*Math.PI*2)*14+(Math.random()-.5)*5),
-    humidity:      Math.round(58+Math.random()*30),
+    hu kmdity:      Math.round(58+Math.random()*30),
     visibility:    parseFloat((5+Math.random()*5).toFixed(1)),
     wind_speed:    Math.round(4+Math.random()*18),
     weather:       isRainy?1:0,
@@ -667,9 +667,9 @@ function updateUI(result,w,traffic){
   S.lastTrafficLevel = traffic.level;
   S.weather          = w;
 
-  document.getElementById('m-temp').textContent=w.temperature+'°';
-  document.getElementById('m-hum').textContent=w.humidity+'%';
-  document.getElementById('m-vis').textContent=w.visibility + ' km';
+  document.getElementById('m-temp').textContent=w.temperature;
+  document.getElementById('m-hum').textContent=w.hu kmdity+'%';
+  document.getElementById('m-vis').textContent=w.visibility+' km';
   document.getElementById('m-traf').textContent=traffic.level;
 
   const cls=severity<=1?'safe':severity===2?'warn':severity===3?'danger':'severe';
@@ -689,8 +689,8 @@ function updateUI(result,w,traffic){
   const reasons = result.reasons && result.reasons.length
     ? `Risk factors: ${result.reasons.join(' · ')}`
     : (severity===1?'Road conditions normal. Drive safely.':
-       severity===2?`Moderate risk. Vis ${w.visibility} km, wind ${w.wind_speed}km/h.`:
-       severity===3?`High accident risk! Vis ${w.visibility} km, wind ${w.wind_speed}km/h.`:
+       severity===2?`Moderate risk. Vis ${w.visibility} km, wind ${w.wind_speed} km/h.`:
+       severity===3?`High accident risk! Vis ${w.visibility} km, wind ${w.wind_speed} km/h.`:
        'Extreme danger! Consider stopping if safe.');
   document.getElementById('rb-msg').textContent=reasons;
 
@@ -734,10 +734,10 @@ function checkAhead(){
   if(!route||!route.pts) return;
   // Find route point ~500m from current position
   const pts=route.pts;
-  let minDist=Infinity, nearIdx=0;
+  let  kmnDist=Infinity, nearIdx=0;
   pts.forEach(([la,ln],i)=>{
     const d=haversine(S.lat,S.lng,la,ln);
-    if(d<minDist){minDist=d;nearIdx=i;}
+    if(d< kmnDist){ kmnDist=d;nearIdx=i;}
   });
   // Look ~500m ahead from nearest point
   let ahead500=null;
@@ -757,7 +757,7 @@ function haversine(la1,ln1,la2,ln2){
 
 function showAhead(sv,w){
   document.getElementById('ahead-title').textContent=sv>=4?'Severe risk zone 500m ahead':'Accident-prone zone 500m ahead';
-  document.getElementById('ahead-sub').textContent=`Reduce speed · Vis ${w.visibility||8}mi · Wind ${w.wind_speed||5}km/h`;
+  document.getElementById('ahead-sub').textContent=`Reduce speed · Vis ${w.visibility||8} km · Wind ${w.wind_speed||5} km/h`;
   document.getElementById('ahead-alert').classList.add('show');
   clearTimeout(S.aheadTO);
   S.aheadTO=setTimeout(closeAhead,10000);
@@ -829,7 +829,7 @@ function drawTrafficLayer(){
     const c=L.circle([S.lat,S.lng],{radius:700,color,fillColor:color,fillOpacity:.07,weight:2,opacity:.5,dashArray:'6 4'}).addTo(map);
     const label=L.marker([S.lat+0.004,S.lng],{
       icon:L.divIcon({
-        html:`<div style="background:${color};color:#fff;padding:4px 10px;border-radius:12px;font-size:12px;font-weight:500;white-space:nowrap;font-family:sans-serif">${peak?'Heavy traffic':'Light traffic'}</div>`,
+        html:`<div style="background:${color};color:#fff;padding:4px 10px;border-radius:12px;font-size:12px;font-weight:500;white-space:nowrap;font-fa kmly:sans-serif">${peak?'Heavy traffic':'Light traffic'}</div>`,
         className:'',iconAnchor:[50,0]
       })
     }).addTo(map);
@@ -875,7 +875,7 @@ document.getElementById('dest-input').addEventListener('keydown',e=>{
 
 async function fetchSuggestions(q){
   try{
-    const r=await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=5&addressdetails=1`,{headers:{'Accept-Language':'en'},signal:AbortSignal.timeout(4000)});
+    const r=await fetch(`https://no kmnatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&li kmt=5&addressdetails=1`,{headers:{'Accept-Language':'en'},signal:AbortSignal.timeout(4000)});
     const d=await r.json();
     showSuggestions(d);
   }catch(e){}
@@ -912,7 +912,7 @@ document.addEventListener('click',e=>{
 // ════════════════════════════════════════
 async function geocode(q){
   try{
-    const r=await fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&limit=1`,{headers:{'Accept-Language':'en'},signal:AbortSignal.timeout(6000)});
+    const r=await fetch(`https://no kmnatim.openstreetmap.org/search?q=${encodeURIComponent(q)}&format=json&li kmt=1`,{headers:{'Accept-Language':'en'},signal:AbortSignal.timeout(6000)});
     const d=await r.json();
     if(d&&d.length) return{lat:+d[0].lat,lng:+d[0].lon};
   }catch(e){}
@@ -920,14 +920,14 @@ async function geocode(q){
 }
 
 // ════════════════════════════════════════
-// FEATURE 7: ROAD TYPE — direct from Nominatim reverse geocode
+// FEATURE 7: ROAD TYPE — direct from No kmnatim reverse geocode
 // Faster & more reliable than going through backend
 // ════════════════════════════════════════
 async function fetchRoadType(lat,lng){
-  // Try Nominatim reverse geocode first (fast, no backend needed)
+  // Try No kmnatim reverse geocode first (fast, no backend needed)
   try{
     const r=await fetch(
-      `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&zoom=17`,
+      `https://no kmnatim.openstreetmap.org/reverse?lat=${lat}&lon=${lng}&format=json&zoom=17`,
       {headers:{'Accept-Language':'en'},signal:AbortSignal.timeout(4000)}
     );
     const d=await r.json();
@@ -999,7 +999,7 @@ async function searchRoute(){
     icon:L.divIcon({
       html:`<div>
         <div style="width:14px;height:14px;background:#EA4335;border-radius:50%;border:3px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.55)"></div>
-        <div style="position:absolute;top:18px;left:50%;transform:translateX(-50%);background:var(--surf);border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-size:11px;white-space:nowrap;font-family:sans-serif;color:#e8eaed;box-shadow:0 2px 8px rgba(0,0,0,.4)">${q.split(',')[0]}</div>
+        <div style="position:absolute;top:18px;left:50%;transform:translateX(-50%);background:var(--surf);border:1px solid var(--border);border-radius:6px;padding:3px 8px;font-size:11px;white-space:nowrap;font-fa kmly:sans-serif;color:#e8eaed;box-shadow:0 2px 8px rgba(0,0,0,.4)">${q.split(',')[0]}</div>
       </div>`,
       className:'',iconSize:[14,14],iconAnchor:[7,7]
     })
@@ -1020,7 +1020,7 @@ async function searchRoute(){
   const COLORS=['#4285F4','#34A853'];
   const routes=[];
 
-  for(let i=0;i<Math.min(osrm.length,2);i++){
+  for(let i=0;i<Math. kmn(osrm.length,2);i++){
     const rt=osrm[i];
     const km=parseFloat((rt.dist_m/1000).toFixed(1));
     const eta=Math.round(rt.dur_s/60);
@@ -1073,7 +1073,7 @@ async function searchRoute(){
       <div class="rcard-bar" style="background:${r.color}"></div>
       <div class="rcard-info">
         <div class="rcard-name">${r.name}</div>
-        <div class="rcard-sub">${r.eta} min · ${r.km} km · ${r.trafficLabel}</div>
+        <div class="rcard-sub">${r.eta}  kmn · ${r.km} km · ${r.trafficLabel}</div>
       </div>
       <div class="rcard-badges">
         <span class="badge ${r.riskCls}">${r.riskLbl}</span>
@@ -1103,7 +1103,7 @@ function startNav(){
   if(S.trafficOn) toggleTraffic();
   recenter();
   if(S.voiceOn){
-    const u=new SpeechSynthesisUtterance(`Navigation started. ${r.km} kilometers. ${r.eta} minutes. Risk is ${r.riskLbl}. Road type: ${r.roadType}.`);
+    const u=new SpeechSynthesisUtterance(`Navigation started. ${r.km} kilometers. ${r.eta}  kmnutes. Risk is ${r.riskLbl}. Road type: ${r.roadType}.`);
     u.rate=.9; speechSynthesis.speak(u);
   }
 }
@@ -1125,7 +1125,7 @@ function endNav(){
 // TICK — every 5 seconds
 // ════════════════════════════════════════
 async function tick(){
-  const[w,traffic]=await Promise.all([getWeather(S.lat,S.lng),getTraffic()]);
+  const[w,traffic]=await Pro kmse.all([getWeather(S.lat,S.lng),getTraffic()]);
   const r=await predict({...w,traffic_density:traffic.density});
   updateUI(r,w,traffic);
   gpsMark.setLatLng([S.lat,S.lng]);
@@ -1137,7 +1137,7 @@ async function tick(){
 // ════════════════════════════════════════
 // BOOT
 // ════════════════════════════════════════
-const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const sleep=ms=>new Pro kmse(r=>setTimeout(r,ms));
 async function boot(){
   const msg=document.getElementById('sp-msg');
   msg.textContent='Loading map...'; initMap(); await sleep(300);
