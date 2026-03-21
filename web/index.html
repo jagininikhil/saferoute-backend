@@ -245,7 +245,7 @@ html,body{width:100%;height:100%;background:#0d0e13;overflow:hidden;font-family:
     <div id="alert-title">High Accident Risk Ahead</div>
     <div id="alert-sub">Reduce speed · Stay alert</div>
   </div>
-  <div id="alert-x" onclick="dismissAlert()">✕</div>
+  <div id="alert-x" onclick="closeAhead()">✕</div>
 </div>
 
 <!-- 500M AHEAD ALERT -->
@@ -366,7 +366,7 @@ html,body{width:100%;height:100%;background:#0d0e13;overflow:hidden;font-family:
 // ═══════════════════════════════════════════════════════
 const API   = 'https://saferoute-backend-s5cm.onrender.com';  // your Flask backend
 const OWM = '15f91917e6fac8819f5acbd5a2100cb3';                               // OpenWeatherMap key (leave blank = mock weather)
-const TICK  = 5000;                             // prediction interval ms
+const TICK  = 4000;                             // prediction interval ms
 
 // ═══════════════════════════════════════════════════════
 // STATE
@@ -497,6 +497,7 @@ async function predict(features){
 // ═══════════════════════════════════════════════════════
 function updateUI(result,w){
   const{severity,risk_level}=result;
+  const severityChanged = severity !== S.severity;
   S.severity=severity; S.weather=w;
 
   // Metrics
@@ -536,12 +537,12 @@ function updateUI(result,w){
       color:severity>=4?'#9C27B0':'#EA4335',
       fillColor:severity>=4?'#9C27B0':'#EA4335'
     });
-    showAlert(severity,w);
-    if(S.voiceOn) voiceAlert(severity);
+    showAhead(severity,w);
+    if(S.voiceOn && severityChanged) voiceAlert(severity);
   } else {
     dangerCircle.setStyle({opacity:0,fillOpacity:0});
     if(S.alertTO) clearTimeout(S.alertTO);
-    S.alertTO=setTimeout(dismissAlert,2000);
+    S.alertTO=setTimeout(closeAhead,2000);
   }
 
   // Nav panel risk
@@ -555,7 +556,7 @@ function updateUI(result,w){
 // ═══════════════════════════════════════════════════════
 // ALERT
 // ═══════════════════════════════════════════════════════
-function showAlert(sv,w){
+function showAhead(sv,w){
   document.getElementById('alert-title').textContent=
     sv>=4?'Severe Risk — Extreme Caution':'High Accident Risk Ahead';
   document.getElementById('alert-sub').textContent=
@@ -563,9 +564,9 @@ function showAlert(sv,w){
     `Reduce speed · Visibility ${w.visibility} km · Wind ${w.wind_speed} km/h`;
   document.getElementById('alert-bar').classList.add('show');
   clearTimeout(S.alertTO);
-  S.alertTO=setTimeout(dismissAlert,10000);
+  S.alertTO=setTimeout(closeAhead,10000);
 }
-function dismissAlert(){ document.getElementById('alert-bar').classList.remove('show'); }
+function closeAhead(){ document.getElementById('alert-bar').classList.remove('show'); }
 
 // ═══════════════════════════════════════════════════════
 // VOICE
