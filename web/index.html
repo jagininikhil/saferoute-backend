@@ -83,7 +83,7 @@ html,body{width:100%;height:100%;background:#0d0e13;overflow:hidden;font-family:
 
 /* SPEED HUD */
 #spd-hud{
-  position:fixed;left:14px;bottom:240px;z-index:201;
+  position:fixed;left:14px;bottom:240px;z-index:301;
   background:var(--surface);border:2px solid var(--border);
   border-radius:10px;padding:7px 14px;text-align:center;
   box-shadow:var(--sh);min-width:58px;
@@ -92,7 +92,7 @@ html,body{width:100%;height:100%;background:#0d0e13;overflow:hidden;font-family:
 #spd-unit{font-size:10px;color:var(--muted);letter-spacing:.5px;margin-top:1px}
 
 /* FABs */
-#fabs{position:fixed;right:14px;bottom:300px;z-index:201;display:flex;flex-direction:column;gap:10px}
+#fabs{position:fixed;right:14px;bottom:300px;z-index:301;display:flex;flex-direction:column;gap:10px;pointer-events:all}
 .fab{
   width:46px;height:46px;border-radius:50%;
   background:var(--surface);border:1px solid var(--border);box-shadow:var(--sh);
@@ -105,7 +105,7 @@ html,body{width:100%;height:100%;background:#0d0e13;overflow:hidden;font-family:
 /* RECENTER */
 
 #recenter{
-  position:fixed;right:14px;bottom:248px;z-index:201;
+  position:fixed;right:14px;bottom:248px;z-index:301;pointer-events:all;
   width:46px;height:46px;border-radius:50%;
   background:var(--surface);border:1px solid var(--border);box-shadow:var(--sh);
   display:flex;align-items:center;justify-content:center;cursor:pointer;
@@ -113,7 +113,7 @@ html,body{width:100%;height:100%;background:#0d0e13;overflow:hidden;font-family:
 
 /* BOTTOM SHEET */
 #sheet{
-  position:fixed;bottom:0;left:0;right:0;z-index:200;
+  position:fixed;bottom:0;left:0;right:0;z-index:300;
   background:var(--surface);border-radius:20px 20px 0 0;
   box-shadow:0 -4px 32px rgba(0,0,0,.6);
 }
@@ -194,7 +194,7 @@ html,body{width:100%;height:100%;background:#0d0e13;overflow:hidden;font-family:
 
 /* HEATMAP LEGEND */
 #hm-legend{
-  position:fixed;left:14px;bottom:240px;z-index:201;
+  position:fixed;left:14px;bottom:240px;z-index:301;
   background:var(--surface);border:1px solid var(--border);border-radius:10px;
   padding:10px 13px;display:none;flex-direction:column;gap:5px;box-shadow:var(--sh);
 }
