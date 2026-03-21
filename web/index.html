@@ -848,7 +848,7 @@ function toggleTraffic(){
 // ═══════════════════════════════════════════════════════
 // MAIN PREDICTION LOOP — every 5 seconds
 // ═══════════════════════════════════════════════════════
-async function tick(){
+async function tick(){ try {
   // Get weather + traffic density in parallel
   const tout=ms=>new Promise(r=>setTimeout(r,ms));
   const [w, traffic] = await Promise.all([
@@ -864,6 +864,7 @@ async function tick(){
 
   // Update traffic metric tile
   const mwind2=document.getElementById('m-wind'); if(mwind2) mwind2.textContent=w.wind_speed;
+  } catch(e){ console.warn('tick error:',e); }
   // Update traffic tile — swap wind for traffic when traffic is on
   const trafficTile = document.getElementById('m-traffic-val');
   if(trafficTile) trafficTile.textContent = traffic.level;
