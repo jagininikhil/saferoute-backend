@@ -182,6 +182,18 @@ html,body{width:100%;height:100%;background:#0d0e13;overflow:hidden;font-family:
 .rc-risk.safe{background:rgba(52,168,83,.15);color:var(--safe)}
 .rc-risk.warn{background:rgba(251,188,4,.15);color:var(--warn)}
 .rc-risk.danger{background:rgba(234,67,53,.15);color:var(--danger)}
+.rcard{pointer-events:all;background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:11px 13px;display:flex;align-items:center;gap:11px;cursor:pointer;transition:background .15s;margin-bottom:7px;}
+.rcard.sel{border-color:rgba(66,133,244,.5);background:rgba(66,133,244,.07)}
+.rcard:active{opacity:.85}
+.rcard-bar{width:4px;height:44px;border-radius:2px;flex-shrink:0}
+.rcard-info{flex:1}
+.rcard-name{font-family:var(--font);font-size:14px;font-weight:500}
+.rcard-sub{font-size:12px;color:var(--muted);margin-top:2px}
+.rcard-badges{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.badge{padding:3px 9px;border-radius:12px;font-size:11px;font-weight:600}
+.badge.safe{background:rgba(52,168,83,.15);color:var(--green)}
+.badge.warn{background:rgba(251,188,4,.15);color:var(--yellow)}
+.badge.danger{background:rgba(234,67,53,.15);color:var(--red)}
 .start-btn{pointer-events:all;
   width:100%;margin-top:10px;padding:14px;border:none;border-radius:10px;
   background:var(--blue);color:#fff;font-family:var(--font);font-size:15px;font-weight:500;cursor:pointer;
