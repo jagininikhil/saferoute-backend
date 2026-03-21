@@ -803,7 +803,7 @@ let trafficLines=[], trafficOn=false;
 
 async function fetchTrafficDensity(){
   try{
-    const r=await fetch(`http://localhost:5000/traffic?lat=${S.lat}&lng=${S.lng}`,
+    const r=await fetch(`https://saferoute-backend-s5cm.onrender.com/traffic?lat=${S.lat}&lng=${S.lng}`,
       {signal:AbortSignal.timeout(3000)});
     return await r.json();
   }catch{
@@ -850,14 +850,15 @@ function toggleTraffic(){
 // ═══════════════════════════════════════════════════════
 async function tick(){
   // Get weather + traffic density in parallel
+  const tout=ms=>new Promise(r=>setTimeout(r,ms));
   const [w, traffic] = await Promise.all([
-    getWeather(S.lat, S.lng),
-    fetchTrafficDensity()
+    Promise.race([getWeather(S.lat,S.lng),tout(2500).then(()=>({temperature:30,humidity:70,visibility:6,wind_speed:12,weather:0,junction:0,traffic_signal:0}))]),
+    Promise.race([fetchTrafficDensity(),tout(2000).then(()=>({density:0.3,level:"Free",color:"#34A853"}))])
   ]);
 
   // Add traffic density to prediction features
   const features = {...w, traffic_density: traffic.density};
-  const r = await predict(features);
+  const r = await Promise.race([predict(features),tout(2000).then(()=>({severity:1,risk_level:"Low"}))]);
 
   updateUI(r, w);
 
