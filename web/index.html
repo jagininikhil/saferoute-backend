@@ -406,7 +406,7 @@ function startGPS(){
     if(!navigator.geolocation){resolve();return;}
     navigator.geolocation.getCurrentPosition(p=>{
       applyPos(p); resolve();
-    }, resolve, {enableHighAccuracy:true,timeout:8000});
+    }, resolve, {enableHighAccuracy:true,timeout:4000});
     navigator.geolocation.watchPosition(applyPos, null,
       {enableHighAccuracy:true,maximumAge:2000});
   });
@@ -889,7 +889,7 @@ async function boot(){
   await sleep(300);
 
   msg.textContent='Getting your GPS location...';
-  await startGPS();
+  await Promise.race([startGPS(), new Promise(r=>setTimeout(r,5000))]);
   map.setView([S.lat,S.lng],15);
   await sleep(200);
 
