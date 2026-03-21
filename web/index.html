@@ -113,6 +113,7 @@ html,body{width:100%;height:100%;background:#0d0e13;overflow:hidden;font-family:
 
 /* BOTTOM SHEET */
 #sheet{
+  pointer-events:all;
   position:fixed;bottom:0;left:0;right:0;z-index:300;
   background:var(--surface);border-radius:20px 20px 0 0;
   box-shadow:0 -4px 32px rgba(0,0,0,.6);
@@ -181,7 +182,7 @@ html,body{width:100%;height:100%;background:#0d0e13;overflow:hidden;font-family:
 .rc-risk.safe{background:rgba(52,168,83,.15);color:var(--safe)}
 .rc-risk.warn{background:rgba(251,188,4,.15);color:var(--warn)}
 .rc-risk.danger{background:rgba(234,67,53,.15);color:var(--danger)}
-.start-btn{
+.start-btn{pointer-events:all;
   width:100%;margin-top:10px;padding:14px;border:none;border-radius:10px;
   background:var(--blue);color:#fff;font-family:var(--font);font-size:15px;font-weight:500;cursor:pointer;
 }
