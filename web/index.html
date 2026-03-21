@@ -883,25 +883,21 @@ async function tick(){ try {
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 
 async function boot(){
-  const msg=document.getElementById('sp-msg');
-
-  msg.textContent='Loading map...';
-  initMap();
-  await sleep(300);
-
-  msg.textContent='Getting your GPS location...';
-  await Promise.race([startGPS(), new Promise(r=>setTimeout(r,5000))]);
-  map.setView([S.lat,S.lng],15);
-  await sleep(200);
-
-  msg.textContent='Fetching weather...';
-  await Promise.race([tick(), new Promise(r=>setTimeout(r,3000))]);
-  await sleep(200);
-
-  msg.textContent='Starting live monitor...';
-  setInterval(tick, TICK);
-
-  await sleep(300);
+  try {
+    const msg=document.getElementById('sp-msg');
+    msg.textContent='Loading map...';
+    initMap();
+    await sleep(300);
+    msg.textContent='Getting your GPS location...';
+    await Promise.race([startGPS(), new Promise(r=>setTimeout(r,5000))]);
+    map.setView([S.lat,S.lng],15);
+    await sleep(200);
+    msg.textContent='Fetching weather...';
+    await Promise.race([tick(), new Promise(r=>setTimeout(r,3000))]);
+    await sleep(200);
+    msg.textContent='Starting live monitor...';
+    setInterval(tick, TICK);
+  } catch(e){ console.warn('boot:',e); setInterval(tick,TICK); }
   document.getElementById('splash').classList.add('out');
   setTimeout(()=>document.getElementById('splash').remove(),500);
 }
