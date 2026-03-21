@@ -449,9 +449,9 @@ async function getWeather(lat,lng){
     humidity:   Math.round(58+Math.random()*30),
     visibility: parseFloat((5+Math.random()*5).toFixed(1)),
     wind_speed: Math.round(4+Math.random()*18),
-    weather:    Math.random()>.78?1:0,
-    junction:   Math.random()>.82?1:0,
-    traffic_signal:Math.random()>.72?1:0
+    weather:    0,
+    junction:   0,
+    traffic_signal:0
   };
 }
 
